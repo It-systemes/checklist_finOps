@@ -986,25 +986,6 @@
           </div>
         </div>
 
-        <!-- TÉLÉCHARGEMENTS (LIENS FICTIFS À ADAPTER) -->
-        <div class="card-soft" style="margin-top: 12px;">
-          <div class="section-title">📥 Télécharger la checklist</div>
-          <p class="section-subtitle">
-            Version PDF, Excel et Word à adapter à votre contexte interne.
-          </p>
-          <ul class="links-list">
-            <li>☑️ <a href="#" target="_blank">PDF interactif (cases à cocher)</a></li>
-            <li>☑️ <a href="#" target="_blank">Excel (calcul automatique du score)</a></li>
-            <li>☑️ <a href="#" target="_blank">Word modifiable</a></li>
-          </ul>
-          <p class="muted">
-            Remplacez les liens ci-dessus par vos vraies URLs (landing page, drive, SharePoint, etc.).
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     (function () {
       const checkboxes = document.querySelectorAll('input[type="checkbox"][data-part]');
@@ -1136,7 +1117,7 @@
         } else if (total <= 16) {
           html = `
             <ul class="links-list">
-              <li>➡️ Accéder aux templates d'optimisation (PowerShell, process, KPIs)</li>
+              <li>➡️ Demandez aux templates d'optimisation (PowerShell, process, KPIs)</li>
               <li>➡️ Lire les 3 cas clients détaillés (identifier votre situation)</li>
               <li>➡️ Demander un audit ciblé gratuit (focalisé sur vos points faibles)</li>
             </ul>
@@ -1154,7 +1135,6 @@
             <ul class="links-list">
               <li>➡️ Partager vos bonnes pratiques (retour d'expérience / benchmark)</li>
               <li>➡️ Programmer un audit externe de validation (challenge de vos acquis)</li>
-              <li>➡️ Rejoindre une communauté DSI FinOps / groupe de pairs</li>
             </ul>
           `;
         }
