@@ -14,6 +14,8 @@
       --accent-mid: #f97316;
       --accent-low: #ef4444;
       --text: #e5e7eb;
+
+      
       --text-soft: #9ca3af;
       --border: #1f2937;
       --radius-lg: 14px;
@@ -502,8 +504,8 @@
             <label class="question">
               <input type="checkbox" data-part="1" />
               <div>
-                Je reçois des alertes automatiques en cas d'anomalie de coûts<br />
-                <small>(Hausse inhabituelle, nouvelle souscription non validée)</small>
+                Je suis alerté si ma facture M365 ou Azure augmente de +10% d'un mois sur l'autre<br />
+                <small>(Alerte manuelle, notification éditeur, ou suivi tableur)</small>
               </div>
             </label>
 
@@ -619,15 +621,15 @@
             <label class="question">
               <input type="checkbox" data-part="2" />
               <div>
-                Toute nouvelle souscription SaaS &gt; 500 €/an nécessite ma validation préalable<br />
-                <small>(Contrôle centralisé des achats IT)</small>
+               J'ai défini un seuil de validation obligatoire pour toute nouvelle souscription SaaS<br />
+                <small>(Seuil adapté à ma structure : 500€, 1000€, 2000€/an...)</small>
               </div>
             </label>
 
             <label class="question">
               <input type="checkbox" data-part="2" />
               <div>
-                Je reçois systématiquement les demandes d'achat IT avant signature<br />
+                Les achats IT des autres services passent obligatoirement par moi ou mon équipe <br />
                 <small>(Pas de souscriptions « sauvages » par les services)</small>
               </div>
             </label>
@@ -705,14 +707,14 @@
               <input type="checkbox" data-part="3" />
               <div>
                 J'exploite activement les fonctionnalités M365 avant d'acheter des outils tiers<br />
-                <small>(Réflexe « est-ce que M365 ne le fait pas déjà ? »)</small>
+                <small>Pas de Zoom SI j'ai Teams, pas de Dropbox SI j'ai OneDrive, etc.)</small>
               </div>
             </label>
 
             <label class="question">
               <input type="checkbox" data-part="3" />
               <div>
-                J'ai migré au moins 1 outil tiers vers M365 dans les 12 derniers mois<br />
+                Mes outils de collaboration sont consolidés : je n'ai pas de doublon payant avec M365<br />
                 <small>(Ex : Dropbox → OneDrive, Zoom → Teams)</small>
               </div>
             </label>
@@ -724,16 +726,16 @@
             <label class="question">
               <input type="checkbox" data-part="3" />
               <div>
-                J'utilise PowerShell ou Graph API pour auditer mes licences régulièrement<br />
-                <small>(Scripts automatisés, pas de vérification manuelle)</small>
+                J'ai un moyen fiable d'extraire la liste de mes licences M365 avec leur statut d'utilisation<br />
+                <small>(Export Admin Center, script, outil tiers, ou prestataire)</small>
               </div>
             </label>
 
             <label class="question">
               <input type="checkbox" data-part="3" />
               <div>
-                J'ai mis en place des règles d'attribution automatique de licences via groupes<br />
-                <small>(License-based group assignment dans Entra ID)</small>
+                L'attribution de licences aux nouveaux collaborateurs suit une règle claire et documentée<br />
+                <small> (Même si c'est manuel : "Commercial = Business Standard, Direction = E3")</small>
               </div>
             </label>
 
@@ -748,8 +750,8 @@
             <label class="question">
               <input type="checkbox" data-part="3" />
               <div>
-                J'ai paramétré des alertes dans le Centre d'administration M365<br />
-                <small>(Notifications proactives sur événements clés)</small>
+                Je suis alerté automatiquement des événements de sécurité ou d'usage anormaux dans M365<br />
+                <small>Connexions suspectes, comptes inactifs, partages externes inhabituels)</small>
               </div>
             </label>
           </div>
