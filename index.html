@@ -434,6 +434,191 @@
 .hero-header {
   text-align: center;
 }
+
+/* ========== WIZARD / TUNNEL STYLES ========== */
+.wizard-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wizard-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 24px;
+  padding: 0 20px;
+}
+
+.wizard-step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.wizard-step-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--card-soft);
+  border: 2px solid rgba(55, 65, 81, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.wizard-step-dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #022c22;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+
+.wizard-step-dot.completed {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #022c22;
+}
+
+.wizard-step-line {
+  width: 80px;
+  height: 3px;
+  background: rgba(55, 65, 81, 0.5);
+  transition: background 0.3s ease;
+}
+
+.wizard-step-line.completed {
+  background: var(--accent);
+}
+
+.wizard-step-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 10px;
+}
+
+.wizard-step-label {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  text-align: center;
+  width: 100px;
+  transition: color 0.3s ease;
+}
+
+.wizard-step-label.active {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.wizard-panel {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.wizard-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.wizard-nav-spacer {
+  width: 120px;
+}
+
+.btn-wizard {
+  min-width: 120px;
+  padding: 10px 20px;
+  font-size: 0.85rem;
+}
+
+.btn-wizard:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.wizard-score-mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 999px;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+}
+
+.wizard-score-mini-label {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.wizard-score-mini-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.wizard-step-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--accent-soft);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #bbf7d0;
+  margin-left: 8px;
+}
+
+/* Results panel specific styles */
+.results-panel {
+  padding: 0;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 700px) {
+  .results-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Hide old layout on wizard mode */
+.layout {
+  display: none;
+}
+
+.wizard-mode .wizard-container {
+  display: block;
+}
+
+.wizard-mode .layout {
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -481,9 +666,596 @@
   </p>
 </header>
 
+    <!-- WIZARD CONTAINER -->
+    <div class="wizard-container">
+      <!-- Progress indicator -->
+      <div class="wizard-progress">
+        <div class="wizard-step-indicator">
+          <div class="wizard-step-dot active" data-step="1">1</div>
+          <div class="wizard-step-line" data-line="1"></div>
+          <div class="wizard-step-dot" data-step="2">2</div>
+          <div class="wizard-step-line" data-line="2"></div>
+          <div class="wizard-step-dot" data-step="3">3</div>
+          <div class="wizard-step-line" data-line="3"></div>
+          <div class="wizard-step-dot" data-step="4">4</div>
+        </div>
+      </div>
 
+      <!-- STEP 1: Visibilite & Gouvernance -->
+      <div class="wizard-panel active" data-panel="1">
+        <div class="card">
+          <div class="card-soft">
+            <div class="card-header">
+              <div>
+                <h2>🔍 Partie 1 : Visibilite & Gouvernance</h2>
+                <p>Objectif : savoir exactement ce que vous payez, pour quoi, et pour qui.</p>
+              </div>
+              <div class="tag">
+                <span class="tag-dot"></span> 10 points
+                <span class="wizard-step-score"><span id="wizard-p1-score">0</span>/10</span>
+              </div>
+            </div>
 
-    <div class="layout">
+            <div class="questions-group">
+              <div class="questions-group-title">Connaissance du Parc</div>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  Je connais precisement le nombre total de licences M365 actives<br />
+                  <small>(Je peux donner le chiffre exact sans consulter l'Admin Center)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  Je connais le taux d'utilisation reel de mes licences M365<br />
+                  <small>(Je sais combien sont reellement utilisees vs payees)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  J'ai une cartographie complete de mes outils SaaS tiers<br />
+                  <small>(Liste exhaustive avec couts annuels a jour)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  Je connais le cout mensuel/annuel exact de mon stack IT collaboratif<br />
+                  <small>(M365 + tous les outils tiers : Zoom, Slack, Dropbox, etc.)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Processus de suivi</div>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  J'ai un tableau de bord a jour de mes licences Microsoft<br />
+                  <small>(Actualise au moins mensuellement)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  Je suis alerte si ma facture M365 ou Azure augmente de +10% d'un mois sur l'autre<br />
+                  <small>(Alerte manuelle, notification editeur, ou suivi tableur)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  Je dispose d'un historique de l'evolution de mes couts IT sur 12+ mois<br />
+                  <small>(Graphique ou tableau permettant l'analyse de tendances)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Revue reguliere</div>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  J'ai realise un audit complet de mes licences dans les 6 derniers mois<br />
+                  <small>(Audit structure, pas juste un coup d'oeil)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  Je fais une revue trimestrielle avec la Direction/Finance sur les couts IT<br />
+                  <small>(Reunion formelle avec presentation des depenses)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="1" />
+                <div>
+                  J'ai identifie et documente mes outils en doublon avec M365<br />
+                  <small>(Liste ecrite des redondances fonctionnelles)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <div class="wizard-nav-spacer"></div>
+              <div class="wizard-score-mini">
+                <span class="wizard-score-mini-label">Score total</span>
+                <span class="wizard-score-mini-value"><span id="wizard-total-1">0</span>/30</span>
+              </div>
+              <button type="button" class="btn btn-wizard" onclick="wizardNext()">
+                Suivant →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Processus & Controles -->
+      <div class="wizard-panel" data-panel="2">
+        <div class="card">
+          <div class="card-soft">
+            <div class="card-header">
+              <div>
+                <h2>⚙️ Partie 2 : Processus & Controles</h2>
+                <p>Objectif : eviter les fuites budgetaires liees a l'humain et aux achats.</p>
+              </div>
+              <div class="tag">
+                <span class="tag-dot"></span> 10 points
+                <span class="wizard-step-score"><span id="wizard-p2-score">0</span>/10</span>
+              </div>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Onboarding</div>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  J'ai un processus documente d'attribution de licences aux nouveaux arrivants<br />
+                  <small>(Procedure ecrite, pas juste « on fait comme d'habitude »)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  L'attribution des licences se fait selon un referentiel metier/fonction<br />
+                  <small>(Business Standard pour profil X, E3 pour profil Y, etc.)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  Le delai moyen d'attribution d'une licence a un nouvel arrivant est &lt; 24h<br />
+                  <small>(Processus fluide et rapide)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Offboarding</div>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  J'ai un processus automatise de desactivation des comptes au depart<br />
+                  <small>(Workflow avec les RH ou systeme automatique)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  Les licences sont recuperees dans les 48h suivant un depart<br />
+                  <small>(Pas de comptes dormants qui trainent)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  J'ai une collaboration formalisee avec les RH pour les mouvements de personnel<br />
+                  <small>(Flux d'information structure : arrivees, departs, changements de poste)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Validation & controles</div>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  J'ai defini un seuil de validation obligatoire pour toute nouvelle souscription SaaS<br />
+                  <small>(Seuil adapte a ma structure : 500€, 1000€, 2000€/an...)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  Les achats IT des autres services passent obligatoirement par moi ou mon equipe<br />
+                  <small>(Pas de souscriptions « sauvages » par les services)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  J'ai mis en place un processus de validation des renouvellements automatiques<br />
+                  <small>(Revue avant reconduction tacite)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="2" />
+                <div>
+                  Je dispose d'un inventaire a jour des contrats IT avec dates d'echeance<br />
+                  <small>(Tableau ou outil centralise)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="btn btn-secondary btn-wizard" onclick="wizardPrev()">
+                ← Precedent
+              </button>
+              <div class="wizard-score-mini">
+                <span class="wizard-score-mini-label">Score total</span>
+                <span class="wizard-score-mini-value"><span id="wizard-total-2">0</span>/30</span>
+              </div>
+              <button type="button" class="btn btn-wizard" onclick="wizardNext()">
+                Suivant →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Optimisation Technique -->
+      <div class="wizard-panel" data-panel="3">
+        <div class="card">
+          <div class="card-soft">
+            <div class="card-header">
+              <div>
+                <h2>🎯 Partie 3 : Optimisation Technique</h2>
+                <p>Objectif : aligner licences, usages et automatisation pour gratter les derniers %.</p>
+              </div>
+              <div class="tag">
+                <span class="tag-dot"></span> 10 points
+                <span class="wizard-step-score"><span id="wizard-p3-score">0</span>/10</span>
+              </div>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Dimensionnement</div>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  J'ai analyse l'adequation entre profils d'usage et types de licences M365<br />
+                  <small>(Business Basic vs Standard vs E3 vs E5)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  Mes utilisateurs E5 exploitent reellement les fonctionnalites avancees<br />
+                  <small>(Defender, Compliance, Analytics utilises)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  J'ai identifie les utilisateurs qui pourraient passer sur une licence inferieure<br />
+                  <small>(Liste des downgrades potentiels)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Rationalisation</div>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  J'ai un plan d'action pour eliminer les doublons fonctionnels identifies<br />
+                  <small>(Roadmap de consolidation SaaS)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  J'exploite activement les fonctionnalites M365 avant d'acheter des outils tiers<br />
+                  <small>(Pas de Zoom SI j'ai Teams, pas de Dropbox SI j'ai OneDrive, etc.)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  Mes outils de collaboration sont consolides : je n'ai pas de doublon payant avec M365<br />
+                  <small>(Ex : Dropbox → OneDrive, Zoom → Teams)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="questions-group">
+              <div class="questions-group-title">Automatisation</div>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  J'ai un moyen fiable d'extraire la liste de mes licences M365 avec leur statut d'utilisation<br />
+                  <small>(Export Admin Center, script, outil tiers, ou prestataire)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  L'attribution de licences aux nouveaux collaborateurs suit une regle claire et documentee<br />
+                  <small>(Meme si c'est manuel : "Commercial = Business Standard, Direction = E3")</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  J'exploite les rapports d'usage M365 pour piloter mes decisions<br />
+                  <small>(Adoption Score, usage Teams/OneDrive/SharePoint)</small>
+                </div>
+              </label>
+              <label class="question">
+                <input type="checkbox" data-part="3" />
+                <div>
+                  Je suis alerte automatiquement des evenements de securite ou d'usage anormaux dans M365<br />
+                  <small>(Connexions suspectes, comptes inactifs, partages externes inhabituels)</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="btn btn-secondary btn-wizard" onclick="wizardPrev()">
+                ← Precedent
+              </button>
+              <div class="wizard-score-mini">
+                <span class="wizard-score-mini-label">Score total</span>
+                <span class="wizard-score-mini-value"><span id="wizard-total-3">0</span>/30</span>
+              </div>
+              <button type="button" class="btn btn-wizard" onclick="wizardNext()">
+                Voir mes resultats →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Resultats -->
+      <div class="wizard-panel results-panel" data-panel="4">
+        <div class="card">
+          <div class="card-soft">
+            <div class="card-header">
+              <div>
+                <h2>📊 Votre score FinOps</h2>
+                <p class="score-sub">Resultat de votre diagnostic complet.</p>
+              </div>
+              <span class="tag tag-success">
+                <span class="tag-dot"></span>
+                Diagnostic termine
+              </span>
+            </div>
+
+            <div class="score-main">
+              Score total : <span id="total-score">0</span> / 30
+            </div>
+            <div class="score-range">
+              Niveau : <strong id="score-level-label">en attente...</strong>
+            </div>
+
+            <div class="score-grid">
+              <div class="score-pill">
+                <span class="score-pill-label">Partie 1<br />Visibilite & Gouvernance</span>
+                <span class="score-pill-value"><span id="part1-score">0</span> / 10</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-pill-label">Partie 2<br />Processus & Controles</span>
+                <span class="score-pill-value"><span id="part2-score">0</span> / 10</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-pill-label">Partie 3<br />Optimisation technique</span>
+                <span class="score-pill-value"><span id="part3-score">0</span> / 10</span>
+              </div>
+            </div>
+
+            <div class="range-bar">
+              <div id="range-indicator" class="range-indicator" style="left: 0%;"></div>
+            </div>
+            <div class="range-labels">
+              <span>0</span>
+              <span>15</span>
+              <span>30</span>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="btn" onclick="window.print()">
+                <span>⬇️</span> Exporter en PDF
+              </button>
+              <button type="button" class="btn btn-secondary" id="reset-btn">
+                <span>🔄</span> Recommencer
+              </button>
+            </div>
+          </div>
+
+          <!-- INTERPRETATION GLOBALE -->
+          <div class="card-soft" style="margin-top: 12px;">
+            <div class="section-title">🧠 Interpretation de votre score</div>
+            <div class="section-subtitle">
+              Les messages ci-dessous s'adaptent automatiquement a votre score global.
+            </div>
+
+            <!-- 0-8 -->
+            <div id="interp-low" class="interp-block interp-low hidden interp-block-global">
+              <h3>🔴 0-8 points : maturite FinOps faible</h3>
+              <p>
+                Votre gouvernance FinOps IT est peu structuree. Vous avez probablement des pertes
+                budgetaires significatives (<strong>12-20 %</strong> du budget M365).
+              </p>
+              <ul>
+                <li>Comptes dormants non detectes</li>
+                <li>Licences surdimensionnees nombreuses</li>
+                <li>Doublons SaaS multiples</li>
+                <li>Pas de visibilite consolidee sur les couts</li>
+              </ul>
+              <p><strong>Action prioritaire :</strong> audit complet en 30 jours.</p>
+              <p>
+                <u>Quick win immediat (3-4h, +5-8 % d'economies des le 1er mois)</u> :
+              </p>
+              <ul>
+                <li>Exporter la liste des licences M365 depuis l'Admin Center</li>
+                <li>La croiser avec la liste RH des collaborateurs actifs</li>
+                <li>Identifier les comptes inactifs &gt; 90 jours</li>
+                <li>Supprimer les licences dormantes detectees</li>
+              </ul>
+            </div>
+
+            <!-- 9-16 -->
+            <div id="interp-mid" class="interp-block interp-mid hidden interp-block-global">
+              <h3>🟠 9-16 points : maturite moyenne</h3>
+              <p>
+                Vous avez quelques bonnes pratiques, mais des zones d'ombre importantes subsistent.
+                Potentiel d'optimisation : <strong>5-12 %</strong> du budget M365.
+              </p>
+              <ul>
+                <li>Visibilite partielle sur les licences</li>
+                <li>Onboarding correct mais offboarding perfectible</li>
+                <li>Quelques doublons SaaS non traites</li>
+                <li>Peu ou pas d'automatisation</li>
+              </ul>
+              <p><strong>Action prioritaire : optimisation ciblee.</strong></p>
+              <ul>
+                <li>Automatiser l'offboarding (collaboration RH) → 2-4 % en 4 semaines</li>
+                <li>Analyser le dimensionnement des licences → 2-5 % en 6 semaines</li>
+                <li>Eliminer 1-2 doublons SaaS prioritaires → 1-3 % en 8 semaines</li>
+              </ul>
+            </div>
+
+            <!-- 17-23 -->
+            <div id="interp-good" class="interp-block interp-good hidden interp-block-global">
+              <h3>🟢 17-23 points : bonne maturite</h3>
+              <p>
+                Vous avez une gouvernance solide avec quelques axes d'amelioration.
+                Potentiel d'optimisation residuel : <strong>2-5 %</strong> du budget M365.
+              </p>
+              <ul>
+                <li>Bonne visibilite globale</li>
+                <li>Processus structures</li>
+                <li>Quelques optimisations techniques manquees</li>
+                <li>Automatisation partielle</li>
+              </ul>
+              <p><strong>Action prioritaire : amelioration continue.</strong></p>
+              <ul>
+                <li>Automatiser les audits mensuels (PowerShell/Graph API)</li>
+                <li>Affiner le dimensionnement (sur usage reel)</li>
+                <li>Mettre en place des KPIs de suivi (&lt; 2 % de gaspillage)</li>
+              </ul>
+            </div>
+
+            <!-- 24-30 -->
+            <div id="interp-excellent" class="interp-block interp-excellent hidden interp-block-global">
+              <h3>✅ 24-30 points : excellence FinOps</h3>
+              <p>
+                Felicitations ! Vous etes dans le top 5 % des DSI en matiere de gouvernance FinOps IT.
+                Vos pratiques sont exemplaires et le gaspillage residuel est &lt; 2 %.
+              </p>
+              <p><strong>Votre situation :</strong></p>
+              <ul>
+                <li>Visibilite totale et quasi temps reel</li>
+                <li>Processus largement automatises</li>
+                <li>Optimisation continue en place</li>
+                <li>Tres peu de pertes budgetaires</li>
+              </ul>
+              <p><strong>Action prioritaire : maintenir & partager.</strong></p>
+              <ul>
+                <li>Maintenir les revues trimestrielles</li>
+                <li>Partager les bonnes pratiques (benchmark interne/externe)</li>
+                <li>Anticiper les evolutions (nouvelles licences, nouveaux outils)</li>
+                <li>Faire auditer votre modele 1x/an pour eviter les angles morts</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ANALYSE PAR CATEGORIE -->
+          <div class="card-soft" style="margin-top: 12px;">
+            <div class="section-title">🎯 Analyse par categorie</div>
+            <p class="section-subtitle">
+              Utilisez la repartition par partie pour prioriser vos actions.
+            </p>
+            <p class="muted">
+              <strong>Seuils cles :</strong> &lt; 4 pts sur une partie = zone a traiter en priorite.
+            </p>
+            <div class="category-advice" id="category-advice">
+              Completez la checklist pour afficher vos priorites par pilier.
+            </div>
+          </div>
+
+          <!-- PROCHAINES ETAPES & RESSOURCES -->
+          <div class="card-soft" style="margin-top: 12px;">
+            <div class="section-title">🔗 Vos prochaines etapes recommandees</div>
+            <p class="section-subtitle">
+              Ces actions s'adaptent a votre score global (0-8, 9-16, 17-23, 24-30).
+            </p>
+            <div id="next-steps">
+              <ul class="links-list">
+                <li>Completez la checklist pour voir vos recommandations personnalisees.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CONTACT / INTERPRETATION -->
+          <div class="card-soft" style="margin-top: 12px;">
+            <div class="section-title">💬 Besoin d'aide pour interpreter vos resultats ?</div>
+            <p class="section-subtitle">
+              Nous analysons gratuitement votre checklist completee (sans engagement).
+            </p>
+            <p style="font-size:0.82rem;">
+              Envoyez-nous votre checklist remplie a :<br />
+              <strong>bonjour@it-systemes.fr</strong>
+            </p>
+            <ul class="links-list">
+              <li>✅ Analyse personnalisee de votre situation</li>
+              <li>✅ Top 3 actions prioritaires pour votre contexte</li>
+              <li>✅ Estimation de vos gains potentiels (€)</li>
+            </ul>
+            <p class="muted">Sous 48h · Gratuit · Confidentiel</p>
+          </div>
+
+          <!-- BENCHMARK -->
+          <div class="card-soft" style="margin-top: 12px;">
+            <div class="section-title">📊 Statistiques benchmark (103 organisations, 2023-2025)</div>
+            <div class="benchmark-grid">
+              <div>
+                <p><strong>Score moyen :</strong> 11,4 / 30</p>
+                <p class="muted">Ou vous situez-vous par rapport aux autres DSI ?</p>
+                <div>
+                  <div class="chip"><strong>0-8</strong> : 38 % (faible)</div>
+                  <div class="chip"><strong>9-16</strong> : 47 % (majorite)</div>
+                  <div class="chip"><strong>17-23</strong> : 12 %</div>
+                  <div class="chip"><strong>24-30</strong> : 3 %</div>
+                </div>
+              </div>
+              <div>
+                <p><strong>Correlation score ↔ economies potentielles :</strong></p>
+                <ul style="margin-top:4px; padding-left:18px; font-size:0.82rem;">
+                  <li>0-8 pts → <strong>12-18 %</strong> du budget optimisable</li>
+                  <li>9-16 pts → <strong>5-12 %</strong> du budget optimisable</li>
+                  <li>17-23 pts → <strong>2-5 %</strong> du budget optimisable</li>
+                  <li>24-30 pts → &lt; 2 % (deja optimise)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-nav" style="border-top: none; padding-top: 0; margin-top: 16px;">
+            <button type="button" class="btn btn-secondary btn-wizard" onclick="wizardPrev()">
+              ← Modifier mes reponses
+            </button>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OLD LAYOUT (hidden, kept for reference) -->
+    <div class="layout" style="display: none;">
       <!-- COLONNE GAUCHE : QUESTIONNAIRE -->
       <div class="card">
         <!-- PARTIE 1 -->
@@ -1031,8 +1803,70 @@
         </div>
 
   <script>
+    // ========== WIZARD NAVIGATION ==========
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function wizardNext() {
+      if (currentStep < totalSteps) {
+        goToStep(currentStep + 1);
+      }
+    }
+
+    function wizardPrev() {
+      if (currentStep > 1) {
+        goToStep(currentStep - 1);
+      }
+    }
+
+    function goToStep(step) {
+      // Hide current panel
+      document.querySelector(`.wizard-panel[data-panel="${currentStep}"]`).classList.remove('active');
+
+      // Show new panel
+      document.querySelector(`.wizard-panel[data-panel="${step}"]`).classList.add('active');
+
+      // Update progress dots
+      updateProgressIndicator(step);
+
+      // Update current step
+      currentStep = step;
+
+      // Scroll to top of wizard
+      document.querySelector('.wizard-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateProgressIndicator(step) {
+      // Update dots
+      for (let i = 1; i <= totalSteps; i++) {
+        const dot = document.querySelector(`.wizard-step-dot[data-step="${i}"]`);
+        dot.classList.remove('active', 'completed');
+
+        if (i < step) {
+          dot.classList.add('completed');
+          dot.innerHTML = '✓';
+        } else if (i === step) {
+          dot.classList.add('active');
+          dot.innerHTML = i;
+        } else {
+          dot.innerHTML = i;
+        }
+      }
+
+      // Update lines
+      for (let i = 1; i < totalSteps; i++) {
+        const line = document.querySelector(`.wizard-step-line[data-line="${i}"]`);
+        if (i < step) {
+          line.classList.add('completed');
+        } else {
+          line.classList.remove('completed');
+        }
+      }
+    }
+
+    // ========== SCORE CALCULATION ==========
     (function () {
-      const checkboxes = document.querySelectorAll('input[type="checkbox"][data-part]');
+      const checkboxes = document.querySelectorAll('.wizard-container input[type="checkbox"][data-part]');
       const totalScoreEl = document.getElementById('total-score');
       const p1ScoreEl = document.getElementById('part1-score');
       const p2ScoreEl = document.getElementById('part2-score');
@@ -1042,6 +1876,14 @@
       const categoryAdviceEl = document.getElementById('category-advice');
       const nextStepsEl = document.getElementById('next-steps');
       const resetBtn = document.getElementById('reset-btn');
+
+      // Wizard mini scores
+      const wizardP1Score = document.getElementById('wizard-p1-score');
+      const wizardP2Score = document.getElementById('wizard-p2-score');
+      const wizardP3Score = document.getElementById('wizard-p3-score');
+      const wizardTotal1 = document.getElementById('wizard-total-1');
+      const wizardTotal2 = document.getElementById('wizard-total-2');
+      const wizardTotal3 = document.getElementById('wizard-total-3');
 
       function computeScores() {
         let total = 0;
@@ -1057,10 +1899,19 @@
           }
         });
 
+        // Update main results
         totalScoreEl.textContent = total;
         p1ScoreEl.textContent = p1;
         p2ScoreEl.textContent = p2;
         p3ScoreEl.textContent = p3;
+
+        // Update wizard mini scores
+        if (wizardP1Score) wizardP1Score.textContent = p1;
+        if (wizardP2Score) wizardP2Score.textContent = p2;
+        if (wizardP3Score) wizardP3Score.textContent = p3;
+        if (wizardTotal1) wizardTotal1.textContent = total;
+        if (wizardTotal2) wizardTotal2.textContent = total;
+        if (wizardTotal3) wizardTotal3.textContent = total;
 
         updateLevel(total);
         updateIndicator(total);
@@ -1071,15 +1922,15 @@
 
       function updateLevel(total) {
         if (total === 0) {
-          levelLabelEl.textContent = "en attente de réponses";
+          levelLabelEl.textContent = "en attente de reponses";
           return;
         }
         if (total <= 8) {
-          levelLabelEl.textContent = "Maturité faible";
+          levelLabelEl.textContent = "Maturite faible";
         } else if (total <= 16) {
-          levelLabelEl.textContent = "Maturité moyenne";
+          levelLabelEl.textContent = "Maturite moyenne";
         } else if (total <= 23) {
-          levelLabelEl.textContent = "Bonne maturité";
+          levelLabelEl.textContent = "Bonne maturite";
         } else {
           levelLabelEl.textContent = "Excellence FinOps";
         }
@@ -1110,31 +1961,31 @@
 
       function updateCategoryAdvice(p1, p2, p3) {
         if (p1 === 0 && p2 === 0 && p3 === 0) {
-          categoryAdviceEl.textContent = "Complétez la checklist pour afficher vos priorités par pilier.";
+          categoryAdviceEl.textContent = "Completez la checklist pour afficher vos priorites par pilier.";
           return;
         }
 
         let msg = "";
 
         if (p1 < 4) {
-          msg += "• Partie 1 (Visibilité & Gouvernance) : priorité absolue à la VISIBILITÉ.\n";
-          msg += "  → Cartographiez l'existant (licences, SaaS, coûts) avant toute optimisation.\n\n";
+          msg += "• Partie 1 (Visibilite & Gouvernance) : priorite absolue a la VISIBILITE.\n";
+          msg += "  → Cartographiez l'existant (licences, SaaS, couts) avant toute optimisation.\n\n";
         }
 
         if (p2 < 4) {
-          msg += "• Partie 2 (Processus & Contrôles) : priorité aux PROCESSUS.\n";
-          msg += "  → Sécurisez onboarding/offboarding et validation des achats IT.\n\n";
+          msg += "• Partie 2 (Processus & Controles) : priorite aux PROCESSUS.\n";
+          msg += "  → Securisez onboarding/offboarding et validation des achats IT.\n\n";
         }
 
         if (p3 < 4) {
-          msg += "• Partie 3 (Optimisation technique) : priorité à l'OPTIMISATION.\n";
+          msg += "• Partie 3 (Optimisation technique) : priorite a l'OPTIMISATION.\n";
           msg += "  → Exploitez mieux M365, rationalisez les doublons et automatisez les audits.\n\n";
         }
 
         if (!msg) {
-          msg = "Vos trois piliers sont globalement équilibrés. Passez en mode amélioration continue :\n";
+          msg = "Vos trois piliers sont globalement equilibres. Passez en mode amelioration continue :\n";
           msg += "• Renforcer l'automatisation (scripts, alertes, KPIs)\n";
-          msg += "• Affiner le dimensionnement sur la base des usages réels\n";
+          msg += "• Affiner le dimensionnement sur la base des usages reels\n";
           msg += "• Structurer une revue trimestrielle FinOps avec la Direction/Finance";
         }
 
@@ -1147,30 +1998,30 @@
         if (total === 0) {
           html = `
             <ul class="links-list">
-              <li>Complétez la checklist pour voir vos recommandations personnalisées.</li>
+              <li>Completez la checklist pour voir vos recommandations personnalisees.</li>
             </ul>
           `;
         } else if (total <= 8) {
           html = `
             <ul class="links-list">
-              <li>➡️ Télécharger le guide complet 35 pages (méthodologie en 30 jours)</li>
+              <li>➡️ Telecharger le guide complet 35 pages (methodologie en 30 jours)</li>
               <li>➡️ Demander un audit gratuit de 30 min</li>
-              <li>➡️ Utiliser le calculateur d'optimisation des licences (simuler vos économies potentielles)</li>
+              <li>➡️ Utiliser le calculateur d'optimisation des licences (simuler vos economies potentielles)</li>
             </ul>
           `;
         } else if (total <= 16) {
           html = `
             <ul class="links-list">
               <li>➡️ Demander les scripts d'automatisation (PowerShell, Graph API)</li>
-              <li>➡️ Télécharger le guide complet 35 pages (méthodologie en 30 jours)</li>
-              <li>➡️ Demander un audit ciblé gratuit (focalisé sur vos points faibles)</li>
+              <li>➡️ Telecharger le guide complet 35 pages (methodologie en 30 jours)</li>
+              <li>➡️ Demander un audit cible gratuit (focalise sur vos points faibles)</li>
             </ul>
           `;
         } else if (total <= 23) {
           html = `
             <ul class="links-list">
               <li>➡️ Demander les scripts d'automatisation (PowerShell, Graph API)</li>
-              <li>➡️ Échanger avec un expert pour une optimisation fine</li>
+              <li>➡️ Echanger avec un expert pour une optimisation fine</li>
             </ul>
           `;
         } else {
@@ -1191,6 +2042,7 @@
       resetBtn.addEventListener('click', () => {
         checkboxes.forEach(cb => cb.checked = false);
         computeScores();
+        goToStep(1);
       });
 
       // Initial
